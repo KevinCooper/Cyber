@@ -11,12 +11,19 @@ def addReg(s, name, ipv4):
 def get(s):
 	print s.recv(1024)
 
+def checkname():
+	print "What"
+
+def isUp(port):
+	s.sendall("isup "+ str(port) +" \n")
+
 def main(s):
 	myAddr = "192.168.72.145"
 	myPort = "9000"
 	get(s)
-	addReg(s, "testing" ,"22.22.22.22")
-	sendDb(s, myAddr, myPort)
+	#addReg(s, "testing2" ,"22.23.25.22")
+	#sendDb(s, myAddr, myPort)
+	isUp(9000)
 
 s = socket.socket()
 s.connect(("192.168.72.134",20005)) 
