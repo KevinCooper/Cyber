@@ -14,6 +14,10 @@ sudo apt-get -y install libffi-dev
 sudo apt-get -y install libreadline-dev
 sudo apt-get -y install virtualenvwrapper python2.7-dev build-essential libxml2-dev libxslt1-dev git libffi-dev cmake libreadline-dev
 sudo apt-get -y install python-dev libffi-dev build-essential virtualenvwrapper
+sudo apt-get -y install lib32z1 lib32ncurses5 lib32bz2-1.0
+sudo apt-get -y install npm
+sudo apt-get -y install nodejs-legacy
+npm install -g tldr
 
 sudo pip install virtualenvwrapper
 sudo pip3 install virtualenvwrapper
@@ -75,12 +79,10 @@ sudo make install
 
 
 #Install angr
-source "/usr/share/virtualenvwrapper/virtualenvwrapper.sh"
 git clone --depth 1 https://github.com/angr/angr-dev
 cd angr-dev
-mkvirtualenv angr
-./setup.sh
-deactivate
+echo "I know this is a bad idea." | ./setup.sh
+cd ..
 
 #Get PIN
 wget http://software.intel.com/sites/landingpage/pintool/downloads/pin-2.14-71313-gcc.4.4.7-linux.tar.gz -O pin.tar.gz

