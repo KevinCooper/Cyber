@@ -1,0 +1,1 @@
+./cmd1 "/bin/ls|/usr/bin/xargs /bin/cat"

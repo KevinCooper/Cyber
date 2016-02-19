@@ -1,0 +1,1 @@
+Use the old information from the username being on the stack to setup the addresses for the passcode pointers
