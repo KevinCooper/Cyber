@@ -14,6 +14,11 @@ global main
 
 
 main:
+	push ebp
+	mov ebp, esp
+	and esp, 0xfffffff0
+	sub esp, 0x10
+
 	xor eax, eax
 	push eax
 	PUSH_STRING "./readme" 
@@ -22,28 +27,41 @@ main:
 	add ecx, O_RDONLY ;arg2 = RDONLY
 	xor edx, edx ;arg3 = 0
 	SYSTEM_CALL(open) 
-	push eax
+	mov DWORD [esp+0x4], eax ;Value of open FD
 	call getmem
-	
-	mov ecx, eax
-	pop ebx
+	mov DWORD [esp+0x0], eax ;Value of mmaped region
+
+my_read:
+	mov ecx, DWORD [esp+0x0]
+	mov ebx, DWORD [esp+0x4]
 	mov edx, 0x100
 	SYSTEM_CALL(read)
+	cmp eax, 0
+	jz my_exit ; At the end?
 
+my_write:
 	xor ebx, ebx
 	inc ebx
 	mov edx, 0x100
 	SYSTEM_CALL(write)	
-	;call exit
-	;Open FD in eax
-	;xor ebx, ebx
-	;mov ebx, eax
-	;SYSTEM_CALL(read)
-;exit:   xor eax, eax
-;exit:
+	mov ecx, DWORD [esp+0x0]
 	xor eax, eax
+
+zero_loop:
+	xor ebx, ebx
+	mov ebx, DWORD [ecx + eax]
+	xor DWORD [ecx + eax], ebx
 	inc eax
-	mov ebx, eax
+	cmp eax, 100
+	jbe zero_loop
+	jmp my_read
+
+my_exit:
+	mov ebx, DWORD [esp+0x4]
+	SYSTEM_CALL(close)
+
+	xor ebx, ebx
+	inc ebx
 	SYSTEM_CALL(exit)
 
 getmem:
